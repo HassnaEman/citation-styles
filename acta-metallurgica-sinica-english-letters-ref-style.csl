@@ -1,1 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0"
+    class="in-text" 
+    demote-non-dropping-particle="never"
+    default-locale="en-US">
 
+  <info>
+    <title>ACTA METALLURGICA SINICA ENGLISH LETTERS REF. STYLE</title>
+    <id>http://www.zotero.org/styles/acta-metallurgica-sinica-english-letters-ref-style</id>
+    <link href="http://www.zotero.org/styles/vancouver" rel="template"/>
+    <author>
+      <name>Your Custom Style</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="engineering"/>
+    <updated>2025-01-01T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <locale xml:lang="en">
+    <terms>
+      <term name="available at"> </term>
+    </terms>
+  </locale>
+
+  <macro name="author">
+    <names variable="author">
+      <name form="short" and="text" initialize-with="." delimiter=", " sort-separator=" "/>
+      <label form="short" prefix=", "/>
+    </names>
+  </macro>
+
+  <macro name="year-date">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+
+  <macro name="journal-abbrev">
+    <text variable="container-title" form="short" suffix="."/>
+  </macro>
+
+  <macro name="publisher-and-location">
+    <group delimiter=", ">
+      <text variable="publisher"/>
+      <text variable="publisher-place"/>
+    </group>
+  </macro>
+
+  <macro name="access">
+    <group delimiter=", ">
+      <text variable="URL"/>
+      <date variable="issued">
+        <date-part name="month" form="long"/>
+        <date-part name="day" prefix=" "/>
+        <date-part name="year" prefix=", "/>
+      </date>
+    </group>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="," vertical-align="baseline">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography delimiter=". " entry-spacing="0" line-spacing="1" second-field-align="flush">
+    <sort>
+      <key variable="citation-number" numeric="true"/>
+    </sort>
+
+    <layout suffix=".">
+      <text prefix="[" variable="citation-number" suffix="] "/>
+
+      <!-- Authors -->
+      <macro name="author"/>
+      <text value=", "/>
+
+      <!-- Titles -->
+      <choose>
+        <if type="webpage dataset post webpage" match="any">
+          <text variable="title" suffix=", "/>
+          <text variable="URL" suffix=", "/>
+          <date variable="issued">
+            <date-part name="month" form="long"/>
+            <date-part name="day" prefix=" "/>
+            <date-part name="year" prefix=", "/>
+          </date>
+        </if>
+
+        <else-if type="article-journal">
+          <macro name="journal-abbrev" suffix=" "/>
+          <text variable="volume" suffix=" "/>
+          <date variable="issued" prefix="(" suffix=") ">
+            <date-part name="year"/>
+          </date>
+          <text variable="page"/>
+        </else-if>
+
+        <else>
+          <text variable="title" suffix=", "/>
+          <macro name="publisher-and-location"/>
+        </else>
+      </choose>
+
+      <!-- DOI only if missing volume/pages -->
+      <choose>
+        <if variable="volume page" match="none">
+          <text variable="DOI" prefix=" https://doi.org/"/>
+        </if>
+      </choose>
+
+    </layout>
+  </bibliography>
+
+</style>
